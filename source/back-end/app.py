@@ -10,14 +10,16 @@
 
 # Importing libraries
 from pymongo import MongoClient
-from flask import Flask, request
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 # ------------------------------------------
 # Initializing and configuring application
 # ------------------------------------------
 
-# Instantiating application
+# Instantiating application and CORS
 app = Flask(__name__)
+CORS(app)
 
 # Instantiating database client on server start
 client = MongoClient()
@@ -35,10 +37,13 @@ def index():
     collection = db["test"]
     instance = collection.find_one() # Retrieving an instance
 
-    print(instance)
+    # Creating response dict to be turned into JSON
+    response = {}
 
-    # TODO: Returning server response w/ instance
+    # Returning server response w/ instance
     if request.method == "GET":
-        return instance["text"]
+        response["text"] = instance["text"]
+        return jsonify(response)
     else:
-        return "This service only supports GET protocols"
+        response["text"] = "This service only supports GET protocols"
+        return jsonify(response)
