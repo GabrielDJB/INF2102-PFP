@@ -87,7 +87,7 @@ class ChatInput extends React.Component {
     // Stopping page refresh
     event.preventDefault();
     // Submitting message data
-    this.props.sendMessageHandler("Message submitted: " + this.state.message);
+    this.props.sendMessageHandler(this.state.message);
     // Resetting message input content
     var newState = this.state;
     newState.message = "";
@@ -114,7 +114,7 @@ class ChatInput extends React.Component {
         <div id="message-input" className="message-input">
           
           <Select id="message-input-select" className="message-input-select" labelId="message-input-select-label" value={this.props.currentCategory} placeholder={this.props.currentCategory} variant="outlined">
-            {this.state.categories.map((value, index) => {
+            {this.props.categories.map((value, index) => {
               return <MenuItem value={value.categoryName} onClick={(e) => changeCategory(value.categoryName, e)}>{value.categoryName}</MenuItem>
             })}
           </Select>

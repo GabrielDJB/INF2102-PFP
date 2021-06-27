@@ -8,6 +8,8 @@
     /* Display */
     display: flex;
     flex-direction: column;
+    /* Scroll */
+    overflow-y: auto;
     /* Size and Position */
     height: 100vh;
     width: 34vw;

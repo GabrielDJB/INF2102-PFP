@@ -43,7 +43,7 @@ class ChatMessage extends React.Component {
       this.state = {
         "category": props.category,
         "sender": props.sender,
-        "timestamp": "14:00",
+        "timestamp": props.timestamp,
         "type": props.type,
       };
   }
@@ -57,12 +57,12 @@ class ChatMessage extends React.Component {
   // ---------------------------------------------------------------------------------
   render() {
     return (
-      <div className={"message-display-area ".concat(this.state.type)}>
-          <Card className={"message-card ".concat(this.state.type)}>
+      <div className={"message-display-area ".concat(this.props.type)}>
+          <Card className={"message-card ".concat(this.props.type)}>
           <CardContent className="message-card-wrapper">
-              <div className="message-card-header"><i>{this.state.category}</i> - <i>{this.state.sender}</i></div>
-              <div className="message-card-content">[Here I would put the message content. This placeholder text is only for the purposes of filling space in the card.]</div>
-              <div className="message-card-footer">{this.state.timestamp}</div>
+              <div className="message-card-header"><i>{this.props.category}</i> - <i>{this.props.sender}</i></div>
+              <div className="message-card-content">{this.props.content}</div>
+              <div className="message-card-footer">{this.props.timestamp}</div>
           </CardContent>
           </Card>
       </div>

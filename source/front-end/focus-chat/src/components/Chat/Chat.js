@@ -43,6 +43,8 @@ class Chat extends React.Component {
       super(props);
       this.state = {
         "categories": this.props.categories,
+        "chatters": this.props.chatters,
+        "currentChatter": this.props.currentChatter,
         "messages": this.props.messages,
       };
   }
@@ -58,6 +60,8 @@ class Chat extends React.Component {
     return (
       <div className="Chat">
           <ChatDisplay
+            chatters={this.props.chatters}
+            currentChatter = {this.props.currentChatter}
             messages={this.props.messages}
           />
           <ChatInput

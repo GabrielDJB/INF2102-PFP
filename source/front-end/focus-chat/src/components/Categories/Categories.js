@@ -62,7 +62,7 @@ class Categories extends React.Component {
       <div className="Categories">
         <Typography className="category-title" variant="h4">Categories</Typography>
         <List className="category-list">
-          {this.state.categories.map((value, index) => {
+          {this.props.categories.map((value, index) => {
             // Checking whether the option is the currently selected one
             if(value.categoryName == this.props.currentCategory){
               return <ListItem button className="category-list-item selected" onClick={(e) => currentCategory(value.categoryName)}>[{value.categoryName}]: {value.categoryDescription}</ListItem>

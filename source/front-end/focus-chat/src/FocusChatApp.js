@@ -50,40 +50,24 @@ class FocusChatApp extends React.Component {
     super(props);
     // Setting current state
     this.state = {
-      "chatID": "test-chat",
-      "chatterID": "test-chatter",
-      "categorization": "test-categorization",
-      "categories":[
-        {"categoryName": "Analysis-1", "categoryDescription": "What do I know or don't know about (all of) you and how?"},
-        {"categoryName": "Analysis-2", "categoryDescription": "What do I know or don't know about affected others and how?"},
-        {"categoryName": "Analysis-3", "categoryDescription": "What do I know or don't know about the intended (and other anticipated) contexts of use?"},
-        {"categoryName": "Analysis-4", "categoryDescription": "What ethical questions can be raised by what I have learned?"},
-        {"categoryName": "Design-1", "categoryDescription": "What have I designed for you?"},
-        {"categoryName": "Design-2", "categoryDescription": "Which of your goals have I designed the system to support?"},
-        {"categoryName": "Design-3", "categoryDescription": "In what situations/contexts do I intend/accept you will use the system to achieve each goal? Why?"},
-        {"categoryName": "Design-4", "categoryDescription": "How should you use the system to achieve each goal, according to my design?"},
-        {"categoryName": "Design-5", "categoryDescription": "For what purpose do I not want you to use the system?"},
-        {"categoryName": "Design-6", "categoryDescription": "What ethical principles influenced my design decisions?"},
-        {"categoryName": "Design-7", "categoryDescription": "How is the system I designed for you aligned with those ethical considerations?"},
-        {"categoryName": "Implementation-1", "categoryDescription": "How have I built the system to support my design vision?"},
-        {"categoryName": "Implementation-2", "categoryDescription": "What have I built into the system to prevent undesirable uses and consequences?"},
-        {"categoryName": "Implementation-3", "categoryDescription": "What have I built into the system to help identify and remedy unanticipated effects?"},
-        {"categoryName": "Implementation-4", "categoryDescription": "What ethical scenarios have I used to evaluate the system?"},
-        {"categoryName": "Evaluation-1", "categoryDescription": "How much of my vision is reflected in the system's actual use?"},
-        {"categoryName": "Evaluation-2", "categoryDescription": "What unanticipated uses have been made? By whom? Why?"},
-        {"categoryName": "Evaluation-3", "categoryDescription": "What anticipated and unanticipated effects have resulted from its use? Whom do they affect? Why?"},
-        {"categoryName": "Evaluation-4", "categoryDescription": "What ethical issues need to be handled through system redesign, redevelopment, policy or even decommisioning?"},
-      ],
+      "chatID": "60d7c635e753bbe49edef57a",
+      "categorization": "ExtendedMetacommunicationTemplate",
+      "categories":[],
+      'chatters':{
+        '60d7c5d3e753bbe49edef578': 'Joãozinho',
+        '60d7c5ede753bbe49edef579': 'Mariazinha'
+      },
       "currentCategory": "Analysis-1",
-      "messages":[
-        {"category":"Category-1", "sender":"Gabriel", "type":"sent"},
-        {"category":"Category-2", "sender":"Diniz", "type":"received"},
-        {"category":"Category-3", "sender":"Barbosa", "type":"sent"},
-      ],
+      "currentChatter": "60d7c5d3e753bbe49edef578",
+      "messages":[],
     };
     // Binding methods to allow for state change
     this.changeCategory = this.changeCategory.bind(this)
     this.sendMessage = this.sendMessage.bind(this)
+    this.componentDidMount = this.componentDidMount.bind(this)
+    // Access strings
+    // http://localhost:3000/60d8e55aa97777e5636d8365 (Joaozinho)
+    // http://localhost:3000/60d8e5caa97777e5636d8366 (Mariazinha)
   }
 
 
@@ -108,6 +92,68 @@ class FocusChatApp extends React.Component {
 
 
 
+  // ---------------------------------------------------------------------
+  // ASYNC METHOD fetchCategories()
+  //
+  // Description:
+  //   Asynchronous function for fetching categories and updating state.
+  // ---------------------------------------------------------------------
+  async fetchCategories(categorizationName) {
+    // Fetching categorization's categories through GET request to back end
+    fetch("http://127.0.0.1:5000/category/retrieve_categorization/?categorizationName=" + categorizationName, {
+      method: 'GET',
+    }).then(
+      response => {
+        // Checking if response is OK and structuring into JSON if so
+        if (!response.ok) {
+          console.log("There was an error with the categorization fetch request.")
+        } else {
+          return response.json()
+        }
+      }
+    ).then(
+      // Setting categories in the current state
+      data => {
+        var currState = this.state
+        currState['categories'] = data['categories']
+        this.setState(currState)
+      }
+    )
+  }
+
+
+
+  // ---------------------------------------------------------------------
+  // ASYNC METHOD fetchMessages()
+  //
+  // Description:
+  //   Asynchronous function for fetching messages and updating state.
+  // ---------------------------------------------------------------------
+  async fetchMessages(chatID) {
+    // Fetching chat's messages
+    fetch("http://127.0.0.1:5000/message/retrieve_chat/?chatID=" + chatID, {
+      method: 'GET',
+    }).then(
+      response => {
+        // Checking if response is OK and structuring into JSON if so
+        if (!response.ok) {
+          console.log("There was an error with the chat messages fetch request.")
+        } else {
+          return response.json()
+        }
+      }
+    ).then(
+      // Setting messages in the current state
+      data => {
+        var currState = this.state
+        currState['messages'] = data['messages']
+        this.setState(currState)
+      }
+    )
+  }
+
+
+
   // -------------------------------------------------------------------------------------
   // METHOD sendMessage()
   // 
@@ -118,7 +164,7 @@ class FocusChatApp extends React.Component {
     // Constructing message element
     const message = {
       "chatID": this.state.chatID,
-      "chatterID": this.state.chatterID,
+      "chatterID": this.state.currentChatter,
       "content": content,
       "timestamp": Date.now(),
       "categorizationName": this.state.categorization,
@@ -126,33 +172,84 @@ class FocusChatApp extends React.Component {
       "replyID": ""
     };
     // Displaying message structure
-    console.log(message);
+    // console.log(message);
+    
     // Sending message to back-end
-    // -- Request code --
+    fetch('http://127.0.0.1:5000/message/create/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams(message),
+    }).then(
+      response => {
+        // Checking if response is OK and structuring into JSON if so
+        if (!response.ok) {
+          console.log("There was an error with the message POST fetch request.")
+        } else {
+          return response.json()
+        }
+      }
+    ).then(
+      // Setting messages in the current state
+      data => {
+        // console.log(data)
+      }
+    )
   }
 
 
 
-  // --------------------------
+  // ---------------------------------------------------------------------
   // METHOD componentDidMount()
   // 
   // Description:
   //   Method that is called right after the component is built. Useful
   //   for data loading.
-  // ---------------------------
-  componentDidMount() {
+  // ---------------------------------------------------------------------
+  async componentDidMount() {
+
+    var categorizationName = ''
+    var chatID = ''
+    var chatterID = ''
+    const instanceID = window.location.pathname.substring(1)
+
     // Loading initialization data
+    await fetch("http://127.0.0.1:5000/login/?instanceID=" + instanceID, {
+      method: 'GET',
+    }).then(
+      response => {
+        // Checking if response is OK and structuring into JSON if so
+        if (!response.ok) {
+          console.log("There was an error with the login fetch request.")
+        } else {
+          return response.json()
+        }
+      }
+    ).then(
+      // Setting messages in the current state
+      data => {
+        // Setting function variables for the rest of function
+        categorizationName = data['categorizationName']
+        chatID = data['chatID']
+        chatterID = data['chatterID']
+        // Updating state
+        var currState = this.state
+        currState['categorization'] = data['categorizationName']
+        currState['chatID'] = data['chatID']
+        currState['currentChatter'] = data['chatterID']
+        this.setState(currState)
+      }
+    )
+
+    // Fetching the rest of the information
+    await this.fetchCategories(categorizationName)
+    await this.fetchMessages(chatID)
 
     // Setting message refresh procedure
-    // setInterval(() => console.log("I have been called!"), 10000);
-    // fetch("http://127.0.0.1:5000/").then(
-    //   response => response.json()
-    // ).then(
-    //   data => this.setState({"text": data["text"]})
-    // )
-    
-    // Calling rendering method
-    this.render();
+    setInterval(() => this.fetchMessages(chatID), 500);
+
   }
 
 
@@ -165,11 +262,14 @@ class FocusChatApp extends React.Component {
   //   for future displays in client-side browsers.
   // ----------------------------------------------------------------------------
   render() {
+
     return (
       <div className="FocusChatApp">  
         <Chat
           categories={this.state.categories}
+          chatters={this.state.chatters}
           currentCategory={this.state.currentCategory}
+          currentChatter={this.state.currentChatter}
           categoryChangeHandler={this.changeCategory}
           messages={this.state.messages}
           sendMessageHandler={this.sendMessage}

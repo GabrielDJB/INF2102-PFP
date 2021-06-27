@@ -15,11 +15,11 @@ chatID = '60d7c635e753bbe49edef57a'
 
 # Data to be used in requests
 request_data = {
-    'chatID': chatID,
+    'instanceID': "60d8e5caa97777e5636d8366",
 }
 
 # Executing request
-r = requests.get('http://127.0.0.1:5000/message/retrieve_chat/', data = request_data)
+r = requests.get('http://127.0.0.1:5000/login/', data = request_data)
 
 # Printing response
 print(r.text)

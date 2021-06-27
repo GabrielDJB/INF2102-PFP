@@ -12,7 +12,7 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from flask import Flask, json, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 
 
@@ -53,6 +53,35 @@ def create_app(testing = False):
 
 
 
+    # ---------------------------------------------------------------
+    # LOGIN SERVICE
+    #
+    # Description:
+    #   Service for deriving instance data based on access hashkey.
+    # ---------------------------------------------------------------
+    @app.route('/login/', methods = ['GET'])
+    def login():
+
+        # Getting data
+        instanceID = request.values.get('instanceID')
+
+        # Checking instanceID data
+        if instanceID == None or instanceID == '':
+            return jsonify({'status': 'Error', 'error': 'Instance ID is missing. Request failed.'})
+
+        # Finding instance by ID and retrieving info
+        result = db['instances'].find_one({'_id': ObjectId(instanceID)})
+
+        # Checking if result was found then returning data
+        if result == None:
+            return jsonify({'status': 'Error', 'error': 'Instance was not found.'})
+        else:
+            return jsonify({'status': 'Success', 'chatID': result['chatID'], 'chatterID': result['chatterID'], 'categorizationName': result['categorizationName']})
+
+
+
+
+
     # ----------------------------------------------------------------------
     # CHATTER SERVICES
     #
@@ -83,7 +112,6 @@ def create_app(testing = False):
 
         # Inserting into database collection
         result = db['chatter'].insert_one(chatter)
-        print('Message was inserted with ID: ', result.inserted_id)
 
         # Returning results
         return jsonify({'status': 'Success', 'chatterID': str(result.inserted_id)})
