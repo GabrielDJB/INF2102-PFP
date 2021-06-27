@@ -1,0 +1,75 @@
+/* -------------------- */
+/* Message card classes */
+/* -------------------- */
+.message-card {
+    /* Alignment */
+    text-align: left;
+    /* Display */
+    display: flex;
+    flex-direction: column;
+    /* Sizing */
+    max-width: 35vw;
+}
+
+.message-card.received {
+    /* Color */
+    background-color: #b7b7b7 !important;
+}
+
+.message-card.sent {
+    /* Color */
+    background-color: lightblue !important;
+}
+
+.message-card-wrapper {
+    /* Padding */
+    padding: 16px !important;
+}
+
+.message-card-header {
+    /* Alignment */
+    text-align: left;
+    /* Padding */
+    padding-bottom: 5px;
+}
+
+.message-card-content {
+    /* Alignment */
+    text-align: left;
+}
+
+.message-card-footer {
+    /* Alignment */
+    text-align: right;
+    /* Padding */
+    padding-top: 5px;
+}
+
+
+/* ---------------------------- */
+/* Message display area classes */
+/* ---------------------------- */
+.message-display-area {
+    /* Color */
+    /* background-color: lightgreen; */
+    /* Display */
+    display: flex;
+    /* Padding */
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    /* Sizing */
+    height: auto;
+    width: auto;
+}
+
+.message-display-area.received {
+    /* Alignment */
+    justify-content: left;
+}
+
+.message-display-area.sent {
+    /* Alignment */
+    justify-content: right;
+}

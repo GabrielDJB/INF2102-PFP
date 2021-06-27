@@ -1,0 +1,40 @@
+/* Class Categories */
+.Categories {
+    /* Border */
+    border-left: 0.5px #434f5a solid;
+    /* Color */
+    color: snow;
+    background-color:#434f5a;
+    /* Display */
+    display: flex;
+    flex-direction: column;
+    /* Size and Position */
+    height: 100vh;
+    width: 34vw;
+}
+
+.category-title {
+    /* Align */
+    text-align: left;
+    /* Padding */
+    padding-bottom: 0.5em;
+    padding-left: 25px;
+    padding-top: 1em;
+}
+
+.category-list {
+    /* Sizing */
+    width: 100%;
+}
+
+.category-list-item {
+    /* Padding */
+    padding-bottom: 12.5px !important;
+    padding-left: 25px !important;
+    padding-top: 12.5px !important;
+}
+
+.category-list-item.selected {
+    /* Color */
+    color: lightblue;
+}

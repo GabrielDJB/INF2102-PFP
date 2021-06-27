@@ -1,0 +1,11 @@
+/* Class Chat */
+.Chat {
+    /* Color */
+    background-color: snow;
+    /* Display */
+    display: flex;
+    flex-direction: column;
+    /* Size and Position */
+    height: 100vh;
+    width: 66vw;
+}

@@ -1,0 +1,15 @@
+/* ----------------- */
+/* Class ChatDisplay */
+/* ----------------- */
+.ChatDisplay {
+    /* Color */
+    background-color: #efefef;
+    /* Display */
+    display: flex;
+    flex-direction: column;
+    /* Overflow */
+    overflow-y: scroll;
+    /* Sizing */
+    height: 94%;
+    width: 100%;
+}

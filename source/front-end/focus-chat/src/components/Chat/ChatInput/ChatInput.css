@@ -1,0 +1,55 @@
+/* Chat Input Class */
+.ChatInput {
+    /* Border */
+    border-top: 1px solid lightslategray;
+    /* Display */
+    display: flex;
+    flex-direction: row !important;
+    /* Shadow */
+    box-shadow: 0px 0px 5px #b0b0b0;
+    /* Sizing */
+    height: 6%;
+    width: 100%;
+}
+
+/* Message Input Classes */
+.message-input {
+    /* Alignment */
+    align-items: center;
+    text-align: left;
+    /* Display */
+    display: flex;
+    flex-direction: row !important;
+    /* Margin */
+    margin-left: 1em !important;
+    margin-right: 1em !important;
+    /* Sizing */
+    height: 100%;
+    width: 100%;
+}
+
+.message-input-select {
+    /* Display */
+    display: flex;
+    /* Sizing */
+    height: 75%;
+    width: 15%;
+}
+
+.message-input-text {
+    /* Display */
+    display: flex;
+    /* Margin */
+    margin-left: 1em !important;
+    /* Sizing */
+    height: 75%;
+    width: 100%;
+}
+
+.message-input-text-wrapper {
+    /* Display */
+    display: flex;
+    /* Sizing */
+    height: 75%;
+    width: 85%;
+}
