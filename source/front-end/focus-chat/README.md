@@ -1,7 +1,9 @@
 # Installing
 In order to install the front-end requirements, you must first install `Node.js` from (URL). Once this is done, all following packages can be installed using the `package.json` file. This can be done by running the following command at the front-end folder:
 
-`npm install`
+```
+npm install
+```
 
 This command retrieves all package dependencies and installs them.
 
