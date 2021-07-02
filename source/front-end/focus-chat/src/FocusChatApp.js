@@ -35,7 +35,7 @@ class FocusChatApp extends React.Component {
 
 
 
-  // ----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------
   // METHOD constructor()
   // 
   // Description:
@@ -43,8 +43,8 @@ class FocusChatApp extends React.Component {
   //   initial state and available properties.
   // 
   // Inputs:
-  //   props - Dictionary (object) with relevant properties (initial variables)
-  // ----------------------------------------------------------------------------
+  //   props - Dictionary (object) with properties provided to component (initial variables)
+  // -----------------------------------------------------------------------------------------
   constructor(props) {
     // Initializing superclass
     super(props);
@@ -248,7 +248,7 @@ class FocusChatApp extends React.Component {
     await this.fetchMessages(chatID)
 
     // Setting message refresh procedure
-    setInterval(() => this.fetchMessages(chatID), 500);
+    setInterval(() => this.fetchMessages(chatID), 1000);
 
   }
 
